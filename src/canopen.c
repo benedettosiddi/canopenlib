@@ -91,7 +91,7 @@ canopen_frame_parse(canopen_frame_t *canopen_frame, struct can_frame *can_frame)
     else
     { 
         canopen_frame->type = CANOPEN_FLAG_STANDARD;
-        canopen_frame->function_code = (can_frame->can_id & 0x00000780U) >> 7;
+        canopen_frame->function_code = (can_frame->can_id & 0x00000780U) >> 8;
         canopen_frame->id            = (can_frame->can_id & 0x0000007FU);
     }
 
@@ -156,7 +156,7 @@ canopen_frame_pack(canopen_frame_t *canopen_frame, struct can_frame *can_frame)
         return -1;
     }
 
-    can_frame->can_id = (canopen_frame->function_code<<7) | canopen_frame->id;
+    can_frame->can_id = (canopen_frame->function_code<<8) | canopen_frame->id;
 
     if (canopen_frame->type == CANOPEN_FLAG_EXTENDED)
     {

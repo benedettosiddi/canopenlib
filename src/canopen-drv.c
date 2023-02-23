@@ -161,6 +161,30 @@ int canopen_read_socket(int sock, uint8_t function_code, uint16_t *status, uint3
 	return canopen_read_frame.data_len;
 }
 
+
+int canopen_read_socket_8bytes(int sock, uint8_t function_code, uint8_t data[8]){
+	canopen_frame_t canopen_read_frame;
+	struct can_frame can_read_frame;
+	
+	int bytes_read = read(sock, &can_read_frame, sizeof(can_read_frame));
+	if(bytes_read < 0){
+		return -4;
+	}
+	if(bytes_read < (int)sizeof(struct can_frame)){
+		return -5;
+	}
+	if(canopen_frame_parse(&canopen_read_frame, &can_read_frame) != 0){
+		return -6;
+	}
+	if(canopen_read_frame.function_code != function_code){
+		return -7;		//TODO define return values properly
+	}
+
+	memcpy(data, canopen_read_frame.payload.data, sizeof(canopen_read_frame.payload.data));
+
+	return canopen_read_frame.data_len;
+}
+
 int canopen_read_socket_4bytes(int sock, uint8_t function_code, uint32_t *data){
 	canopen_frame_t canopen_read_frame;
 	struct can_frame can_read_frame;

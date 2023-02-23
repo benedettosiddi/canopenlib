@@ -36,6 +36,7 @@ int canopen_frame_fill_pdo_request(canopen_frame_t *frame, uint8_t function_code
 
 int canopen_read_frame(int sock, canopen_frame_t* canopen_frame);
 int canopen_read_socket_4bytes(int sock, uint8_t function_code, uint32_t *data);
+int canopen_read_socket_8bytes(int sock, uint8_t function_code, uint8_t data[8]);
 
 #ifdef __cplusplus
 }
