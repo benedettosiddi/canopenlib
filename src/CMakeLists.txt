@@ -3,7 +3,6 @@ set(SRC_FILES
   canopen.c
   canopen-com.c
   canopen-drv.c
-  canopen-faulhaber-drv.c
   )
 
 add_library(${STATIC_LIBRARY_NAME} ${SRC_FILES})
